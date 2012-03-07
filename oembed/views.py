@@ -3,7 +3,7 @@ import re
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse, get_resolver
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
-from django.template import defaultfilters
+from django.template import defaultfilters, RequestContext
 from django.utils import simplejson
 from django.utils.encoding import smart_str
 
@@ -88,7 +88,7 @@ def consume_json(request):
             rendered = None
         else:
             oembeds = url
-            rendered = client.parse_text(url, width, height, template_dir=template_dir)
+            rendered = client.parse_text(url, width, height, context=RequestContext(request), template_dir=template_dir)
 
         output[url] = {
             'oembeds': oembeds,
